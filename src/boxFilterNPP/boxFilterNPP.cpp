@@ -79,6 +79,8 @@ int main(int argc, char *argv[])
     npp::ImageNPP_8u_C1 oDeviceDst;
 
     for(auto entry : std::filesystem::directory_iterator{"../../data/"}) {
+      if (std::filesystem::is_empty(entry)) continue;
+      
       std::string sFilename = entry.path().string();
       char *filePath;
 
