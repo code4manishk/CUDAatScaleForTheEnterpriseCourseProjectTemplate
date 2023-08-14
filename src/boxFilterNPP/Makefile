@@ -257,7 +257,7 @@ else
       BUILD_TYPE := release
 endif
 
-ALL_CCFLAGS :=
+ALL_CCFLAGS := --std=c++17
 ALL_CCFLAGS += $(NVCCFLAGS)
 ALL_CCFLAGS += $(EXTRA_NVCCFLAGS)
 ALL_CCFLAGS += $(addprefix -Xcompiler ,$(CCFLAGS))
@@ -305,7 +305,7 @@ ALL_CCFLAGS += --threads 0
 
 INCLUDES += -I../Common/UtilNPP
 
-LIBRARIES += -lnppisu_static -lnppif_static -lnppc_static -lculibos -lfreeimage
+LIBRARIES += -lnppisu_static -lnppif_static -lnppc_static -lculibos -lfreeimage -lstdc++fs
 
 # Attempt to compile a minimal application linked against FreeImage. If a.out exists, FreeImage is properly set up.
 $(shell echo "#include \"FreeImage.h\"" > test.c; echo "int main() { return 0; }" >> test.c ; $(NVCC) $(ALL_CCFLAGS) $(INCLUDES) $(ALL_LDFLAGS) $(LIBRARIES) -l freeimage test.c)
