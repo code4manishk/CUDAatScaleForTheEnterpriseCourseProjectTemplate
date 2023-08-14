@@ -72,13 +72,19 @@ bool printfNPPinfo(int argc, char *argv[])
 int main(int argc, char *argv[])
 {
   printf("%s Starting...\n\n", argv[0]);
+  std::string data_path{"../../data/"};
+
+  if (argc > 1) data_path = std::string{argv[1]}; 
 
   try
   {
+    // ImageNPP objects
     npp::ImageNPP_8u_C1 oDeviceSrc;
     npp::ImageNPP_8u_C1 oDeviceDst;
 
-    for(auto entry : std::filesystem::directory_iterator{"../../data/"}) {
+    // get the path of image files
+    // iterate over the files one by one
+    for(auto entry : std::filesystem::directory_iterator{data_path}) {
       if (std::filesystem::is_empty(entry)) continue;
       
       std::string sFilename = entry.path().string();
@@ -102,11 +108,8 @@ int main(int argc, char *argv[])
                   << std::endl;
         file_errors++;
         infile.close();
-      }
 
-      if (file_errors > 0)
-      {
-        exit(EXIT_FAILURE);
+        continue; // skip error files
       }
 
       std::string sResultFilename = sFilename;
@@ -119,14 +122,6 @@ int main(int argc, char *argv[])
       }
 
       sResultFilename += "_boxFilter.pgm";
-
-      if (checkCmdLineFlag(argc, (const char **)argv, "output"))
-      {
-        char *outputFilePath;
-        getCmdLineArgumentString(argc, (const char **)argv, "output",
-                                &outputFilePath);
-        sResultFilename = outputFilePath;
-      }
 
       // declare a host image object for an 8-bit grayscale image
       npp::ImageCPU_8u_C1 oHostSrc;
@@ -173,15 +168,13 @@ int main(int argc, char *argv[])
     std::cerr << "Program error! The following exception occurred: \n";
     std::cerr << rException << std::endl;
     std::cerr << "Aborting." << std::endl;
-
-    exit(EXIT_FAILURE);
+    return -1;
   }
   catch (...)
   {
     std::cerr << "Program error! An unknow type of exception occurred. \n";
     std::cerr << "Aborting." << std::endl;
 
-    exit(EXIT_FAILURE);
     return -1;
   }
 
