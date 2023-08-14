@@ -72,9 +72,15 @@ bool printfNPPinfo(int argc, char *argv[])
 int main(int argc, char *argv[])
 {
   printf("%s Starting...\n\n", argv[0]);
-  std::string data_path{"../../data/"};
+  std::string data_path{"../../data/"}, out_path{"../../out/"};
 
   if (argc > 1) data_path = std::string{argv[1]}; 
+  if (argc > 2) out_path = std::string{argv[2]};
+
+  if (!std::filesystem::create_directory(std::filesystem::path{out_path})) {
+    std::cerr << "Couldn't create directory " << out_path << std::endl;
+    return -1;
+  }
 
   try
   {
@@ -112,7 +118,9 @@ int main(int argc, char *argv[])
         continue; // skip error files
       }
 
-      std::string sResultFilename = sFilename;
+      std::string sResultFilename = out_path;
+      sResultFilename += "/";
+      sResultFilename += entry.path().filename();
 
       std::string::size_type dot = sResultFilename.rfind('.');
 
