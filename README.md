@@ -1,18 +1,19 @@
-# CUDAatScaleForTheEnterpriseCourseProjectTemplate
-This project uses box filter algorithm and applies it several files present in the data directory. Most of the files are quite large pgm files
+# CUDAatScaleForTheEnterpriseCourseProject
+
+This project uses box filter algorithm and applies it several files present in the data directory. Most of the files are quite large pgm files.
+It basically demonstrate the usage of NPP Apis and filterbox function to perform a box filter on images.
 
 ## Project Description
-
 Beyond just being a template for course members, this project can be used by non-course members as the general structure for CUDA projects.
-
 
 ## Code Organization
 
 ```bin/```
-This folder should hold all binary/executable code that is built automatically or manually. Executable code should have use the .exe extension or programming language-specific extension.
+This folder hold binary code that is built automatically with make command. 
 
 ```data/```
     This folder contains pgm files on which filter will be applied. Generated images are also found in this directory.
+
 ```lib/```
 Any libraries that are not installed via the Operating System-specific package manager should be placed here, so that it is easier for inclusion/linking.
 
