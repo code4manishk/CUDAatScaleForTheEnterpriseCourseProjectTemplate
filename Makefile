@@ -277,7 +277,7 @@ ALL_LDFLAGS += $(addprefix -Xlinker ,$(LDFLAGS))
 ALL_LDFLAGS += $(addprefix -Xlinker ,$(EXTRA_LDFLAGS))
 
 # Common includes and paths for CUDA
-INCLUDES  := -ICommon
+INCLUDES  := -Ilib/Common
 LIBRARIES :=
 
 ################################################################################
@@ -335,19 +335,19 @@ else
 	@echo "Sample is ready - all dependencies have been met"
 endif
 
-boxFilterNPP.o:boxFilterNPP.cpp
+boxFilterNPP.o:src/boxFilterNPP/boxFilterNPP.cpp
 	$(EXEC) $(NVCC) $(INCLUDES) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -o $@ -c $<
 
 boxFilterNPP: boxFilterNPP.o
 	$(EXEC) $(NVCC) $(ALL_LDFLAGS) $(GENCODE_FLAGS) -o $@ $+ $(LIBRARIES)
-	$(EXEC) mkdir -p ../../bin/$(TARGET_ARCH)/$(TARGET_OS)/$(BUILD_TYPE)
-	$(EXEC) cp $@ ../../bin/$(TARGET_ARCH)/$(TARGET_OS)/$(BUILD_TYPE)
+	$(EXEC) mkdir -p ./bin/$(TARGET_ARCH)/$(TARGET_OS)/$(BUILD_TYPE)
+	$(EXEC) cp $@ ./bin/$(TARGET_ARCH)/$(TARGET_OS)/$(BUILD_TYPE)
 
 run: build
-	$(EXEC) ./boxFilterNPP
+	$(EXEC) ./boxFilterNPP ${ARGS}
 
 clean:
 	rm -f boxFilterNPP boxFilterNPP.o
-	rm -rf ../../bin/$(TARGET_ARCH)/$(TARGET_OS)/$(BUILD_TYPE)/boxFilterNPP
+	rm -rf ./bin/$(TARGET_ARCH)/$(TARGET_OS)/$(BUILD_TYPE)/boxFilterNPP
 
 clobber: clean
