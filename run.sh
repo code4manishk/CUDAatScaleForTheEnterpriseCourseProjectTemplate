@@ -23,7 +23,7 @@ main() {
         -h | --help) help; return 0;;
         -o | --output) shift 1; output=$1;;
         *)
-        echo "unknown option"
+        echo "unknown option $1"
         help
         exit 1
         esac
@@ -33,3 +33,5 @@ main() {
   echo "$input, $output"
   ./boxFilterNPP $input $output
 }
+
+main $@
