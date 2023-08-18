@@ -72,10 +72,15 @@ bool printfNPPinfo(int argc, char *argv[])
 int main(int argc, char *argv[])
 {
   printf("%s Starting...\n\n", argv[0]);
-  std::string data_path{"../../data/"}, out_path{"../../out/"};
+  std::string data_path{"./data/"}, out_path{"./out/"};
 
   if (argc > 1) data_path = std::string{argv[1]}; 
   if (argc > 2) out_path = std::string{argv[2]};
+
+  if (std::filesystem::exists(out_path)) {
+    std::cerr << "directory " << out_path << " already exists" << std::endl;
+    return -1;
+  }
 
   if (!std::filesystem::create_directory(std::filesystem::path{out_path})) {
     std::cerr << "Couldn't create directory " << out_path << std::endl;

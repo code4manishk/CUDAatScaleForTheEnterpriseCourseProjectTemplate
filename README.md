@@ -15,19 +15,25 @@ This folder hold binary code that is built automatically with make command.
     This folder contains pgm files on which filter will be applied. Generated images are also found in this directory.
 
 ```lib/```
-Any libraries that are not installed via the Operating System-specific package manager should be placed here, so that it is easier for inclusion/linking.
+This contains utility libs from lab and support files for cuda npp box filter packages.
 
 ```src/```
 This directory contains a modified version of code from assigment lab and has been adapted to run the filter on multiple files.
 
 ```INSTALL```
-    To generate the images, please run the following commands.
-    make clean
-    make
+    To run the program and generate the images, please run the following commands.
+    make clean build
     make run
+    This will produce the output images in current directory named out.
+    One can also give input to program like path to input data directory containing pgm files and an out directory to write output images e.g.
+    make run ARGS="./data/ /tmp/out"
 
 ```Makefile or CMAkeLists.txt or build.sh```
     Makefile contains changes adapted from the lab assigment to include support for multiple files and filter.
 
 ```run.sh```
-An optional script to run the program, i.e. basically it does make and make run.
+An optional script to run the program, with help options
+
+sh run.sh -i input_data_path -o output_path
+
+example: sh run.sh -i ./data -o /tmp/out
